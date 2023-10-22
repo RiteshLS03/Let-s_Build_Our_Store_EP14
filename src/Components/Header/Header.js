@@ -7,14 +7,19 @@ import useOnline from "../../utils/useOnline";
 import Instamart from "../Instamart";
 import { RiCloseLine, RiMenu3Line } from "react-icons/ri";
 import UserContext from "../../utils/UserContext";
+import {AiOutlineShoppingCart} from "react-icons/ai"
+import { useSelector } from "react-redux";
+import store from "../../utils/store";
 
 const Menu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState("true");
   const online = useOnline();
 
-  const { user} = useContext(UserContext)
 
+  const { user } = useContext(UserContext)
   console.log(user);
+
+  const cartItems = useSelector(store => store.cart.items)
 
   return (
     <>
@@ -33,6 +38,9 @@ const Menu = () => {
         </li>
         <li className="flex items-center md:text-sm:px-2:mx-4 md:p-2">
           <Link to="/Instamart">Instamart</Link>
+        </li>
+        <li  className="flex items-center cursor-pointer">
+          <p> <AiOutlineShoppingCart badges={cartItems.length} size={25}/>{cartItems.length}</p>
         </li>
         <li
           className="flex items-center md:text-sm md:p-2"

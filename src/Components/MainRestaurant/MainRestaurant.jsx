@@ -12,6 +12,8 @@ import useRestaurant from "../../utils/useRestaurant";
 
 import "./MainRestaurant.css";
 import { logo } from "../../Images";
+import { addItem } from "../../utils/cartSlice";
+import { useDispatch } from "react-redux";
 
 const MainRestaurant = () => {
   const params = useParams();
@@ -20,11 +22,18 @@ const MainRestaurant = () => {
 
   function isVeg(veg) {
     console.log(veg);
-     if(veg === "VEG"){
+    if (veg === "VEG") {
       return true;
-    }else{
+    } else {
       return false;
     }
+  }
+
+  const dispatch = useDispatch()
+
+
+  function handleAddItem(){
+    dispatch(addItem("Grapes"))
   }
 
   return !restaurant ? (
@@ -37,27 +46,31 @@ const MainRestaurant = () => {
           <div className="main_restaurant_restaurant-header sm:mx-4 md:mx-4 lg:mx-20 xl:mx-20 2xl:mx-56">
             <div className="info_left">
               <h2>{restaurant?.name}</h2>
-              <h5 style={{color:"#7e808c"}} className="text-sm">{restaurant?.cuisines?.join(", ")}</h5>
-              <h5 style={{color:"#7e808c"}} className="text-sm">
+              <h5 style={{ color: "#7e808c" }} className="text-sm">
+                {restaurant?.cuisines?.join(", ")}
+              </h5>
+              <h5 style={{ color: "#7e808c" }} className="text-sm">
                 {restaurant?.areaName}, {restaurant?.sla?.lastMileTravelString}
               </h5>
             </div>
             <div className="info_right">
-              <h4 style={{color:"green"}}>
+              <h4 style={{ color: "green" }}>
                 <AiFillStar /> {restaurant?.avgRatingString}
               </h4>
-              <h6 style={{color:"#8b8d97"}} className="text-sm">{restaurant?.totalRatingsString}</h6>
+              <h6 style={{ color: "#8b8d97" }} className="text-sm">
+                {restaurant?.totalRatingsString}
+              </h6>
             </div>
           </div>
           {/* Price and Timing */}
           <div className="main_restaurant_restaurant-body sm:mx-4md:mx-4 lg:mx-20 xl:mx-20 2xl:mx-56">
             <div className="main_restaurant_restaurant-body_upper sm:mx-4">
               <h3 className="text-lg ">
-                <AiOutlineClockCircle className="mx-2"/>
+                <AiOutlineClockCircle className="mx-2" />
                 {restaurant?.sla?.slaString}
               </h3>
               <h3 className="text-lg ">
-                <HiOutlineCurrencyRupee className="mx-2"/>
+                <HiOutlineCurrencyRupee className="mx-2" />
                 {restaurant?.costForTwoMessage}
               </h3>
             </div>
@@ -75,15 +88,14 @@ const MainRestaurant = () => {
                 <div className="menu-item" key={item?.id}>
                   <div className="menu-item-details">
                     <div className="py-2">
-                      {
-                      isVeg(item?.itemAttribute?.vegClassifier) ? (
+                      {isVeg(item?.itemAttribute?.vegClassifier) ? (
                         <GrSquare style={{ color: "	#008000" }} />
                       ) : (
                         <BiCaretUpSquare style={{ color: "#964B00" }} />
                       )}
                     </div>
                     <h4 className="item-title text-[#3e4152]">{item.name}</h4>
-                    <p style={{color:"#3E4152"}}>
+                    <p style={{ color: "#3E4152" }}>
                       {item?.price > 0
                         ? new Intl.NumberFormat("en-IN", {
                             style: "currency",
@@ -105,7 +117,12 @@ const MainRestaurant = () => {
                           className="py-1"
                         />
                       )}
-                      <button className="add-btn border px-2 rounded-xl text-[#60b246] hover:shadow-md">Add +</button>
+                      <button
+                        onClick={() => handleAddItem()}
+                        className="add-btn border px-2 rounded-xl text-[#60b246] hover:shadow-md"
+                      >
+                        Add +
+                      </button>
                     </div>
                   </div>
                 </div>
