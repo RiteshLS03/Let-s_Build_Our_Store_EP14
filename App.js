@@ -17,6 +17,7 @@ import UserContext from "./src/utils/UserContext";
 // import Instamart from "./src/Components/Instamart";
 import { Provider } from "react-redux";
 import store from "./src/utils/store";
+import Cart from "./src/Components/Cart/Cart";
 
 const Instamart = lazy(() => import("./src/Components/Instamart"));
 // Upon On Demand --> Upon Loading --> React will suspend Loading
@@ -82,6 +83,10 @@ const appRouter = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path:"/cart",
+        element:<Cart />
+      }
     ],
   },
 ]);

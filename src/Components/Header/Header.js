@@ -1,4 +1,4 @@
-import React, { useState , useContext } from "react";
+import React, { useState, useContext } from "react";
 import { logo, vector } from "../../Images/index"; /* Images for UI */
 import { Link } from "react-router-dom";
 import { Body } from "../Index";
@@ -7,19 +7,18 @@ import useOnline from "../../utils/useOnline";
 import Instamart from "../Instamart";
 import { RiCloseLine, RiMenu3Line } from "react-icons/ri";
 import UserContext from "../../utils/UserContext";
-import {AiOutlineShoppingCart} from "react-icons/ai"
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import store from "../../utils/store";
 
 const Menu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState("true");
   const online = useOnline();
 
-
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
   console.log(user);
 
-  const cartItems = useSelector(store => store.cart.items)
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
 
   return (
     <>
@@ -39,15 +38,20 @@ const Menu = () => {
         <li className="flex items-center md:text-sm:px-2:mx-4 md:p-2">
           <Link to="/Instamart">Instamart</Link>
         </li>
-        <li  className="flex items-center cursor-pointer">
-          <p> <AiOutlineShoppingCart badges={cartItems.length} size={25}/>{cartItems.length}</p>
+        <li className="flex items-center cursor-pointer">
+          <Link to={"/cart"}>
+            <AiOutlineShoppingCart size={25} />
+            {cartItems.length}
+          </Link>
         </li>
         <li
           className="flex items-center md:text-sm md:p-2"
-          style={{margin:"0 0.5rem"}}
+          style={{ margin: "0 0.5rem" }}
         >
           {isLoggedIn ? (
-            <button onClick={() => setIsLoggedIn(false)}><h6 className="text-xs">{user.name}</h6>Logout</button>
+            <button onClick={() => setIsLoggedIn(false)}>
+              <h6 className="text-xs">{user.name}</h6>Logout
+            </button>
           ) : (
             <button onClick={() => setIsLoggedIn(true)}>Login</button>
           )}

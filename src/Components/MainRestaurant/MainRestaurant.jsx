@@ -13,7 +13,8 @@ import useRestaurant from "../../utils/useRestaurant";
 import "./MainRestaurant.css";
 import { logo } from "../../Images";
 import { addItem } from "../../utils/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const MainRestaurant = () => {
   const params = useParams();
@@ -29,19 +30,20 @@ const MainRestaurant = () => {
     }
   }
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-
-  function handleAddItem(){
-    dispatch(addItem("Grapes"))
+  const addFoodItem = (item) => {
+    dispatch(addItem(item))
   }
+
+  // console.log(useSelector(store.cart.items.length()));
 
   return !restaurant ? (
     <MAINRESSHIMMAR />
   ) : (
     <>
       {/* Got help from the git repo CHE/NA */}
-      <div className="sm:mx-auto:px-auto md:mx-20 lg:mx-20">
+      <div className="sm:mx-auto:px-auto mx-40">
         <div className="restaurant_summary">
           <div className="main_restaurant_restaurant-header sm:mx-4 md:mx-4 lg:mx-20 xl:mx-20 2xl:mx-56">
             <div className="info_left">
@@ -77,7 +79,7 @@ const MainRestaurant = () => {
           </div>
         </div>
         {/* restaurant lists */}
-        <div className="restaurant_lists sm:mx-4 md:mx-4 lg:mx-20 xl:mx-20 2xl:mx-56">
+        <div className="restaurant_lists flex justify-between mx-24">
           <div className="menu-items-container">
             <div className="menu-title-wrap">
               <h3 className="menu-title">Recommended</h3>
@@ -101,7 +103,7 @@ const MainRestaurant = () => {
                             style: "currency",
                             currency: "INR",
                           }).format(item.price / 100)
-                        : " "}{" "}
+                        : " "}
                     </p>
                     {console.log(item)}
                     <p className="item-description text-sm py-4 text-[rgba(40,44,63,.45)]">
@@ -118,7 +120,7 @@ const MainRestaurant = () => {
                         />
                       )}
                       <button
-                        onClick={() => handleAddItem()}
+                        onClick={() => addFoodItem(item)}
                         className="add-btn border px-2 rounded-xl text-[#60b246] hover:shadow-md"
                       >
                         Add +
