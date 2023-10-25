@@ -40,8 +40,8 @@ const Menu = () => {
         </li>
         <li className="flex items-center cursor-pointer">
           <Link to={"/cart"}>
-            <AiOutlineShoppingCart size={25} />
-            {cartItems.length}
+           <p><AiOutlineShoppingCart size={25} />            {cartItems.length}
+</p> 
           </Link>
         </li>
         <li
